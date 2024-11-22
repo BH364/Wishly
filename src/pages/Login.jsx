@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useContext } from 'react';
 import { ShopContext } from '../context/ShopContext';
 import axios from 'axios';
+import {toast} from 'react-toastify';
+import { useEffect } from 'react';
 const Login = () => {
   const [currentState,setCurrentState] =useState('Login');
   const {token,setToken,navigate,backendUrl} =useContext(ShopContext);
@@ -17,19 +19,42 @@ const Login = () => {
                 withCredentials:true
                });
                if(response.data.success){
-                console.log(response.data);
-                setToken(response.data.token);
+                  setToken(response.data.token);
+                  localStorage.setItem('token',response.data.token);
+               }
+               else{
+                  toast.error(response.data.message);
                }
             }
-
             else{
+              const response = await axios.post(`${backendUrl}/user/login`,{email,password},{
+                withCredentials:true
+              });
+              if(response.data.success){
+                setToken(response.data.token);
+                localStorage.setItem('token',response.data.token);
+              }
+              else{
+                
+                toast.error(response.data.message);
 
+              }
             }
+
+           
         }
         catch(err){
+            console.log(err);
+            toast.error(err.message);
+
 
         }
   }
+  useEffect(()=>{
+    if(token){
+      navigate('/');
+    }
+  },[token])
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col items-center w-[90%] sm:max-w-96 m-auto mt-14 text-gray-800'>
        <div className='inline-flex items-center gap-2 mb-2 mt-10'>

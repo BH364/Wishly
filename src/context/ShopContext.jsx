@@ -34,6 +34,16 @@ const ShopContextProvider =(props)=>{
             cartData[itemId][size]=1;
         }
         setCartItems(cartData);
+        if(token){
+            try{
+              const response= await axios.post(backendUrl+'/cart/add',{itemId,size},{headers:token,withCredentials:true});
+               console.log(response)
+            }
+            catch(err){
+                console.log(err);
+                toast.error(err.message);
+            }
+        }
    }
 
    const getCartCount = () =>{
@@ -89,6 +99,12 @@ const ShopContextProvider =(props)=>{
    }
    useEffect(()=>{
    getProductsData();
+   },[]);
+
+   useEffect(()=>{
+    if(!token && localStorage.getItem('token')){
+              setToken(localStorage.getItem('token'))
+    }
    },[])
    const updateQuantity = async (itemId,size,quantity) =>{
        let cartData = structuredClone(cartItems);
