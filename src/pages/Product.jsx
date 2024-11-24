@@ -10,13 +10,14 @@ const Product = () => {
   const [image,setImage] = useState('');
   const [size,setSize] =useState('');
   const fetchProductData = async ()=>{
-      products.map((item)=>{
-        if(item._id===productId){
-          setProductData(item);
-          setImage(item.image[0]);
-          return null;
-        }
-      }) 
+     const foundProduct =products.find(item =>item._id===productId);
+     if(foundProduct){
+      setProductData(foundProduct);
+      setImage(foundProduct.image[0]);
+     }
+     else{
+      console.log("product not found")
+     }
   }
   useEffect(()=>{
    fetchProductData();
