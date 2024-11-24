@@ -9,7 +9,7 @@ const Cart = () => {
     const [cartData, setCartData] = useState([]);
 
     useEffect(() => {
-       if(products.length>0){
+    
       const tempData = [];
         
         for (const items of cartItems) {
@@ -25,7 +25,7 @@ const Cart = () => {
         }
       
         setCartData(tempData);
-      }
+      
     }, [cartItems]);
 
     
@@ -39,7 +39,7 @@ const Cart = () => {
                     cartData.map((item) => {
                         const productData = products.find((product) => product._id === item.itemId);
                         if (!productData) {
-                          console.warn(`Product not found for ID: ${item.itemId}`);
+                          console.log(`Product not found for ID: ${item.itemId}`);
                           return null; // Skip rendering this item if productData is not found
                       }                       
                        const uniqueKey = `${item.itemId}-${item.size}`;
@@ -73,7 +73,7 @@ const Cart = () => {
                                 <img 
                                     className='w-4 mr-4 sm:w-5 cursor-pointer' 
                                     src={assets.bin_icon} 
-                                    onClick={() => updateQuantity(item.itemId, item.size, 0)} 
+                                    onClick={() => updateQuantity(item.itemId, item.size, Number(0))} 
                                     alt="Remove item" 
                                 />
                             </div>

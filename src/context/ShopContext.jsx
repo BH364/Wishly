@@ -10,7 +10,7 @@ const ShopContextProvider =(props)=>{
    const backendUrl=import.meta.env.VITE_BACKEND_URL;
    const [search,setSearch]=useState('');
    const [showSearch,setShowSearch]=useState(false);
-   const [cartItems,setCartItems] = useState({});
+   const [cartItems,setCartItems] = useState([]);
    const [products,setProducts]=useState([]);
    const [token,setToken] = useState('');
    const navigate = useNavigate();
@@ -49,11 +49,11 @@ const ShopContextProvider =(props)=>{
 
    const getCartCount = () =>{
        let totalCount=0;
-       for(const items in cartItems){
-           for(const item in cartItems[items]){
+       for(const items of cartItems){
+           for(const item of items.sizes){
               try{
-                 if(cartItems[items][item] > 0){
-                    totalCount+=cartItems[items][item];
+                 if(item.quantity > 0){
+                    totalCount+=item.quantity;
                  }
               }
               catch(err){
@@ -64,13 +64,15 @@ const ShopContextProvider =(props)=>{
        return totalCount;
    }
    const getCartAmount = ()  =>{
+  
     let totalAmount=0;
-    for(const items in cartItems){
-        let itemInfo=products.find((product)=>product._id===items);
-        for(const item in cartItems[items]){
+    for(const item of cartItems){
+        
+        let itemInfo=products.find((product)=>product._id===item.itemId);
+        for(const size of item.sizes){
             try{
-                if(cartItems[items][item]>0){
-                    totalAmount+=itemInfo.price * cartItems[items][item];
+                if(size.quantity>0){
+                    totalAmount+=itemInfo.price * size.quantity;
                 }
               
             }
@@ -143,7 +145,7 @@ const ShopContextProvider =(props)=>{
        let cartData = structuredClone(cartItems);
 
       if(quantity===0){
-        size.splice(sizeIndex,1);
+        sizes.splice(sizeIndex,1);
         if(sizes.length===0){
             cartData.splice(itemIndex,1);
         }
@@ -183,7 +185,7 @@ const ShopContextProvider =(props)=>{
     const value={
        products,currency,delivery_fee,
        search,setSearch,showSearch,setShowSearch,backendUrl,
-       cartItems,addToCart,getCartCount,updateQuantity,getCartAmount,navigate,setToken,token
+       cartItems,setCartItems,addToCart,getCartCount,updateQuantity,getCartAmount,navigate,setToken,token
     }
 
     return (
