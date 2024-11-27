@@ -6,34 +6,49 @@ import axios from 'axios';
 const Orders = () => {
   const {products,currency,token,backendUrl} = useContext(ShopContext);
   const [orderData,setOrderData] = useState([]);
-  const loadOrderData =async ()=>{
+  const loadOrderData = async () => {
     try {
-      if(!token){
-        return null;
+      if (!token) {
+        return <div>Please log in to view your orders</div>;
       }
-      const response = await axios.post(`${backendUrl}/order/userorders`,{},
+  
+      const response = await axios.post(
+        `${backendUrl}/order/userorders`,
+        {},
         {
-          headers:token,
-          withCredentials:true
+          headers: token,
+          withCredentials: true,
         }
       );
-      if(response.data.success){
-          let allOrdersItem= [];
-          response.data.orders.map((order)=>{
-              order.items.map((item)=>{
-                item['status']=order.status;
-                item['payment']=order.payment;
-                item['paymentMethod']=order.paymentMethod;
-                item['date']=order.date;
-                allOrdersItem.push(item);
-              })
-          })
-          setOrderData(allOrdersItem.reverse())
+  
+      if (response.data.success) {
+        const allOrdersItem = response.data.orders.reduce((acc, order) => {
+          order.items.forEach(item => {
+            const uniqueKey = `${item.productId}-${item.size}`;
+            if (acc[uniqueKey]) {
+              acc[uniqueKey].quantity += item.quantity;
+            } else {
+              acc[uniqueKey] = {
+                ...item,
+                status: order.status,
+                payment: order.payment,
+                paymentMethod: order.paymentMethod,
+                date: order.date,
+              };
+            }
+          });
+          return acc;
+        }, {});
+  
+        // Convert the map back to an array and reverse for latest first
+        setOrderData(Object.values(allOrdersItem).reverse());
       }
     } catch (error) {
-      
+      console.error('Error loading orders:', error);
+      setError('Failed to load orders');
     }
-  }
+  };
+  
   useEffect(()=>{
      loadOrderData()
   },[token])

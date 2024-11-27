@@ -23,6 +23,7 @@ const Navbar = () => {
       toast.error(err.message);
      }
      }
+     
   return (
     <div className='flex items-center justify-between font-medium'>
       <Link to='/'> <img src={assets.logo} alt="logo" className='w-36 rounded-full'/></Link> 

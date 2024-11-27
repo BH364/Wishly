@@ -8,25 +8,20 @@ const Cart = () => {
     const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
     const [cartData, setCartData] = useState([]);
 
-    useEffect(() => {
+
     
-      const tempData = [];
-        
-        for (const items of cartItems) {
-            for (const item of items.sizes) {
-                if (item.quantity > 0) {
-                    tempData.push({
-                        itemId: items.itemId,
-                        size: item.size,
-                        quantity: item.quantity
-                    });
-                }
-            }
-        }
+        useEffect(() => {
+            const tempData = cartItems.flatMap(({ itemId, sizes }) =>
+              sizes.map((sizeObj) => ({
+                itemId,
+                size: sizeObj.size,
+                quantity: sizeObj.quantity,
+              }))
+            );
+            setCartData(tempData);
+          }, [cartItems]);
       
-        setCartData(tempData);
-      
-    }, [cartItems]);
+       
 
     
     return (
