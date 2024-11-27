@@ -93,9 +93,7 @@ const verifyStripe=async (req,res)=>{
       res.status(400).json({success:false,message:err.message});
       }
 }
-const placeOrderRazorpay = async (req,res)=>{
-    
-}
+
 
 
 const allOrders = async (req,res)=>{
