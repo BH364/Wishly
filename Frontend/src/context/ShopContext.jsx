@@ -89,11 +89,11 @@ const ShopContextProvider =(props)=>{
   const getProductsData = async () => {
     try {
       const response = await axios.get(`${backendUrl}/product/list`, {
-        headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });
       if (response.data.success) {
         setProducts(response.data.products);
+        console.log(response.data.products);
       } else {
         toast.error(response.data.message);
       }

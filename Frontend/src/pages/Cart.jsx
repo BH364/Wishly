@@ -35,7 +35,7 @@ const Cart = () => {
                         const productData = products.find((product) => product._id === item.itemId);
                         if (!productData) {
                           console.log(`Product not found for ID: ${item.itemId}`);
-                          return null; 
+                          return null; // Skip rendering this item if productData is not found
                       }                       
                        const uniqueKey = `${item.itemId}-${item.size}`;
 
@@ -62,7 +62,7 @@ const Cart = () => {
                                     } 
                                     type="number" 
                                     min={1} 
-                                    value={item.quantity}  
+                                    value={item.quantity}  // Use value instead of defaultValue
                                     className='border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1'
                                 />
                                 <img 
