@@ -7,8 +7,10 @@ const BestSeller = () => {
     const {products} =useContext(ShopContext);
     const [bestSeller,setBestSeller]= useState([]);
     useEffect(()=>{
+        console.log(products);
        const bestProduct= products.filter((item)=>(item.bestseller));
-       setBestSeller(bestProduct.slice(0,5));
+       const shuffledProducts = bestProduct.sort(() => Math.random() - 0.5);
+       setBestSeller(shuffledProducts.slice(0,5));
     },[products]) 
   return (
     <div className='my-10'>
@@ -20,7 +22,7 @@ const BestSeller = () => {
         <div className='grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6'>
             {
                 bestSeller.map((item,index)=>(
-                    <ProductItem key={index} id={item._id} name={item.name} image={item.image} price={item.price} />
+                    <ProductItem key={index} id={item._id} name={item.name} image={item.image} price={item.price} bestseller={item.bestseller}/>
                 ))
             }
         </div>
