@@ -1,25 +1,4 @@
 {
-<<<<<<< HEAD
-    "version": 2,
-    "builds": [
-        {
-            "src": "server.js",
-            "use": "@vercel/node",
-            "config": {
-                "includeFiles": [
-                    "dist/**"
-                ]
-            }
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "server.js"
-        }
-    ]
-}
-=======
     "rewrites": [
       {
         "source": "/(.*)",
@@ -27,4 +6,3 @@
       }
     ]
   }
->>>>>>> e3f705a01547b8191ba95030b0ef882169c3293e
