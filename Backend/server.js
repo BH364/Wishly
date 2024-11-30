@@ -17,7 +17,7 @@ const allowedOrigins = [
   'https://wishly-frontend-lq8o.vercel.app', // Main frontend
   'https://wishlyadmin.vercel.app', // Admin frontend
 ];
-app.use(cors({ origin: 'https://wishly-frontend-lq8o.vercel.app' }));
+
 // CORS configuration
 app.use(cors({
   origin: allowedOrigins,
