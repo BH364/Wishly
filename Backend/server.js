@@ -14,10 +14,10 @@ app.use(cookieParser())
 app.use(express.json());
 
 const allowedOrigins = [
-  'http://localhost:5173', // Main frontend
-  'http://localhost:5174', // Admin frontend
+  'https://wishly-frontend-lq8o.vercel.app', // Main frontend
+  'https://wishlyadmin.vercel.app', // Admin frontend
 ];
-
+app.use(cors({ origin: 'https://wishly-frontend-lq8o.vercel.app' }));
 // CORS configuration
 app.use(cors({
   origin: allowedOrigins,
