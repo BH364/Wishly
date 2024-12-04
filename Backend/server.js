@@ -14,7 +14,7 @@ app.use(cookieParser())
 app.use(express.json());
 
 const allowedOrigins = [
-  'https://wishly-frontend-lq8o.vercel.app', // Main frontend
+  'https://wishly-frontend.vercel.app', // Main frontend
   'https://wishlyadmin.vercel.app', // Admin frontend
 ];
 
