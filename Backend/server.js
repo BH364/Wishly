@@ -15,7 +15,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   'https://wishly-frontend.vercel.app', // Main frontend
-  'https://wishlyadmin.vercel.app', // Admin frontend
+  'https://wishlyadmin-261hc88hw-harikas-projects-5e5ebbc6.vercel.app', // Admin frontend
 ];
 
 // CORS configuration
