@@ -21,6 +21,8 @@
             res.cookie('token',token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true ,
               secure: true, // Ensure cookies are sent only over HTTPS
               sameSite: 'Strict', 
+              secure: process.env.NODE_ENV === 'production',
+              
             });
             
             res.json({
@@ -73,7 +75,8 @@
           const token = createToken(user._id);
           res.cookie('token',token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true,
             secure: true, // Ensure cookies are sent only over HTTPS
-            sameSite: 'Strict', 
+            secure: process.env.NODE_ENV === 'production', // Ensure the cookie is sent only over HTTPS in production
+            sameSite: 'Strict', // Prevents CSRF
            });
           res.json({
             success:true,
