@@ -18,7 +18,10 @@
          const isMatch=await bcrypt.compare(password,user.password);
          if(isMatch){
             const token=createToken(user._id);
-          res.cookie('token',token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true });
+            res.cookie('token',token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true ,
+              secure: true, // Ensure cookies are sent only over HTTPS
+              sameSite: 'Strict', 
+            });
             
             res.json({
                 success:true,
@@ -68,7 +71,10 @@
           const newUser= new userModel({name,email,password:hashedPassword});
           const user=await newUser.save();
           const token = createToken(user._id);
-          res.cookie('token',token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true });
+          res.cookie('token',token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true,
+            secure: true, // Ensure cookies are sent only over HTTPS
+            sameSite: 'Strict', 
+           });
           res.json({
             success:true,
             user,
@@ -86,7 +92,10 @@
        const {email,password} = req.body;
        if(email===process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD){
         const token=jwt.sign(email+password,process.env.JWT_SECRET);
-        res.cookie('token', token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true });
+        res.cookie('token', token, { expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), httpOnly: true ,
+          secure: true, // Ensure cookies are sent only over HTTPS
+          sameSite: 'Strict', 
+        });
         
         res.json({success:true,token});
         

@@ -7,6 +7,7 @@ const List = ({token}) => {
     const fetchList = async () =>{
       try{
         const response = await axios.get(backendUrl+'/product/list',{
+          headers:token,
             withCredentails:true
         });
         if(response.data.success){
