@@ -15,8 +15,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://wishly-frontend-lq8o-pegz4qxv7-harikas-projects-5e5ebbc6.vercel.app',
-  'https://wishly-frontend.vercel.app', // Main frontend
+  'https://wishly-frontend-eight.vercel.app',
   'https://wishlyadmin-261hc88hw-harikas-projects-5e5ebbc6.vercel.app', // Admin frontend
 ];
 
